@@ -171,6 +171,14 @@ class interp1d(object):
             _out = np.empty(1)
             func(self._f, _xout, _out, self.a, self.h, self.n, self.p, self._o, self.lb, self.ub)
             return _out[0]
+    def update(self, f):
+        """
+        Update the function to interpolate to f
+        """
+        assert f.shape == self.f.shape
+        self.f = f
+        self._f, _o = _extrapolate1d(f, self.k, self.p, self.c, self.e)
+        self._o = IntList(_o)
 
 # interpolation routines
 def _interp1d_k1(f, xout, fout, a, h, n, p, o, lb, ub):
@@ -371,6 +379,14 @@ class interp2d(object):
             _out = np.empty(1)
             func(self._f, _xout, _yout, _out, self.a, self.h, self.n, self.p, self._o, self.lb, self.ub)
             return _out[0]
+    def update(self, f):
+        """
+        Update the function to interpolate to f
+        """
+        assert f.shape == self.f.shape
+        self.f = f
+        self._f, _o = _extrapolate2d(f, self.k, self.p, self.c, self.e)
+        self._o = IntList(_o)
 
 # interpolation routines
 def _interp2d_k1(f, xout, yout, fout, a, h, n, p, o, lb, ub):
@@ -653,6 +669,15 @@ class interp3d(object):
             _out = np.empty(1)
             func(self._f, _xout, _yout, _zout, _out, self.a, self.h, self.n, self.p, self._o, self.lb, self.ub)
             return _out[0]
+    def update(self, f):
+        """
+        Update the function to interpolate to f
+        """
+        assert f.shape == self.f.shape
+        self.f = f
+        self._f, _o = _extrapolate3d(f, self.k, self.p, self.c, self.e)
+        self._o = IntList(_o)
+
 
 # interpolation routines
 def _interp3d_k1(f, xout, yout, zout, fout, a, h, n, p, o, lb, ub):
